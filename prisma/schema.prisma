@@ -1,0 +1,17 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  userId Int @id @default(sequence())
+  email String @unique
+  password  String
+  friends User[] @relation("friends")
+  friendsRelation User[] @relation("friends") // makes the extra table that has the relation of user_id1 with user_id2 which indicates they are friends
+}
